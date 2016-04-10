@@ -1,0 +1,50 @@
+.flexable {
+  @include flexbox;
+  @include flex-direction(column);
+  @include flex-wrap(nowrap);
+  @include justify-content(space-between);
+
+  &-row {
+    width: 100%;
+    @include flexbox;
+    @include flex-direction(row);
+    @include flex-wrap(nowrap);
+
+    &-cell {
+      @include flexbox;
+      @include flex-direction(row);
+      @include flex-wrap(nowrap);
+      @include flex-grow(1);
+      @include flex-basis(0);
+      @include align-items(center);
+      @include justify-content(flex-end);
+
+      padding: 0.5em;
+      border: 1px solid black;
+      word-wrap: break-word;
+      word-break: break-all;
+    }
+  }
+}
+
+/* utility styles */
+@for $i from 1 through 10 {
+  .utility-flex-grow-#{$i} {
+    @include flex-grow($i);
+  }
+}
+
+/* custom styles: TODO: move into example */
+
+.column-header, .group-header-row {
+  background: lightblue;
+}
+
+.row-name {
+  background: #ffbea6;
+}
+
+.row-name, .column-header, .group-header-row {
+  @include justify-content(flex-start);
+  font-weight: bold;
+}
