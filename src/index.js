@@ -6,5 +6,5 @@ function requirePath(folderName) {
     });
 }
 
-requirePath('src');
-requirePath('src/css');
+requirePath('');
+requirePath('css');
