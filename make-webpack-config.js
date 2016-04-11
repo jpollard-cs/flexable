@@ -93,11 +93,13 @@ function makeConfig(isProd) {
 
                     // Options to configure babel with
                     query: {
-                        plugins: ['transform-runtime'],
+                        plugins: ['transform-runtime'], // todo this means the babel-runtime is required by anyone using
+                        // this code (may want to create separate build for those not using babel)
                         presets: babelPresets,
                     }
                 },
                 {
+                    // todo: package compiled css externally from control
                     test: /\.scss$/,
                     exclude: /node_modules/,
                     include: path.join(__dirname, 'src/css'),
