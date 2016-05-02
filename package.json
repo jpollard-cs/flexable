@@ -5,8 +5,8 @@
   "main":"index.js",
   "scripts": {
     "clean": "rimraf ./dist",
-    "build-dev": "npm run clean && nsp check && webpack --config webpack.config.js",
-    "build-prod": "npm run clean && nsp check && webpack --config webpack-production.config.js"
+    "build-dev": "nsp check && webpack --config webpack.config.js",
+    "build-prod": "nsp check && webpack --config webpack-production.config.js"
   },
   "author": "Jordan Pollard",
   "license": "MIT",
