@@ -1,30 +1,29 @@
 import React, { Component, PropTypes } from 'react';
-import except from 'except';
+
+import FlexableElement from './FlexableElement.jsx';
 
 class ColumnHeader extends Component {
     static propTypes = {
-        columnHeaderClass: PropTypes.string,
-        columnHeaderStyle: PropTypes.object,
-        columnHeaderText: PropTypes.string
-    }
-
-    constructor(props) {
-        super(props);
+        className: PropTypes.string,
+        style: PropTypes.object,
+        text: PropTypes.string
     }
 
     render() {
-        const { columnHeaderClass, children, columnHeaderStyle } = this.props;
-        const style = columnHeaderStyle ? columnHeaderStyle : Object.create(null);
-        const columnHeaderText = this.props.columnHeaderText !== undefined ? `${this.props.columnHeaderText}` : '';
-        const passthroughProps = except(this.props, ['id', 'key', 'children', 'form', 'columnHeaderClass']);
-        const transformedChildren = React.Children.map(children, c => React.cloneElement(c, passthroughProps));
+        const { className, children, style, text } = this.props;
+        const _className = `${ className ? `${className} ` : '' }column-header flexable-row-cell`;
 
         return (
-            <div style={style} className={ `${ columnHeaderClass ? `${columnHeaderClass} ` : '' }column-header flexable-row-cell` }>
-                { React.Children.count(children) > 0 ? transformedChildren : columnHeaderText }
-            </div>
+            <FlexableElement style={style}
+                         className={_className}
+                         children={children}
+                         text={text} />
         );
     }
+}
+
+ColumnHeader.defaultProps = {
+    text: ''
 }
 
 export default ColumnHeader;

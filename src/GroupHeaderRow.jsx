@@ -1,28 +1,27 @@
 import React, { Component, PropTypes } from 'react';
-import except from 'except';
+
+import FlexableElement from './FlexableElement.jsx';
 
 class GroupHeaderRow extends Component {
     static propTypes = {
-        groupHeaderRowClass: PropTypes.string,
-        groupHeaderRowText: PropTypes.string
+        key: PropTypes.string.isRequired,
+        style: PropTypes.object,
+        className: PropTypes.string,
+        text: PropTypes.string
     }
-
-    constructor(props) {
-        super(props);
-    }
-
-    // TODO: maybe there's a way to get this to work with a HOC Row model if callers can provide a custom row render model to override
-    // row rendering?
+    
     render() {
-        const { groupHeaderRowClass, groupHeaderRowText, children } = this.props;
-
-        const passthroughProps = except(this.props, ['id', 'key', 'children', 'form', 'groupHeaderRowClass']);
-        const transformedChildren = React.Children.map(children, (c, i) => React.cloneElement(c, { key: `group-header-cell-${i}`, ...passthroughProps }));
+        const { className, text, children, style, key } = this.props;
+        const _className = `${ className ? `${className} ` : '' }group-header-row flexable-row`;
+        const generateChildKey = (key, i) => `group-header-cell-${key}-${i}`;
 
         return (
-            <div className={ `${ groupHeaderRowClass ? `${groupHeaderRowClass} ` : '' }group-header-row flexable-row` }>
-                { React.Children.count(children) > 0 ? transformedChildren : groupHeaderRowText }
-            </div>
+            <FlexableElement style={style} 
+                             className={_className} 
+                             children={children}
+                             generateChildKey={generateChildKey}
+                             transformChildren={transformChildren} 
+                             text={text} />
         );
     }
 }

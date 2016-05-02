@@ -22,6 +22,8 @@ function makeConfig(isProd) {
 
     var devtool = 'eval';
 
+    var fileName = 'flexable';
+
     if(isProd){
         plugins = plugins.concat(
             new webpack.DefinePlugin({
@@ -47,6 +49,7 @@ function makeConfig(isProd) {
         );
 
         styleLoaders = styleLoaders.concat('css', 'sass');
+        fileName += '.min';
     } else {
         plugins = plugins.concat(
             new webpack.DefinePlugin({
@@ -75,7 +78,7 @@ function makeConfig(isProd) {
         },
         output: {
             path: path.join(__dirname, 'dist'),
-            filename: '[name].js',
+            filename: fileName + '.js',
             publicPath: publicPath
         },
         module: {

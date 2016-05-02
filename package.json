@@ -1,8 +1,8 @@
 {
-  "name": "flexable",
-  "version": "0.1.0",
-  "description": "a flexible and lightweight React table control",
-  "main": "index.js",
+  "name":"flexable",
+  "version":"0.1.0",
+  "description":"a flexible and lightweight React table control",
+  "main":"index.js",
   "scripts": {
     "clean": "rimraf ./dist",
     "build-dev": "npm run clean && nsp check && webpack --config webpack.config.js",

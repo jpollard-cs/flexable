@@ -1,37 +1,38 @@
 import React, { Component, PropTypes } from 'react';
-import except from 'except';
 
-// simply a collection of columns
-// a row is just a virtual object which is given
-// ability to override things like sorting logic
-// thus allowing rows to contain groupings
-class Row extends Component {
+import FlexableElement from './FlexableElement.jsx';
+import DefaultCell from './Cell.jsx';
+
+export const RowHOC = (Cell) => class Row extends Component {
     static propTypes = {
-        rowClass: PropTypes.string,
+        key: PropTypes.string.isRequired,
+        className: PropTypes.string,
+        style: PropTypes.object,
         rowData: PropTypes.object,
         columnDefinitions: PropTypes.array
     }
-
-    constructor(props) {
-        super(props);
-    }
-
+    
     render() {
-        const { rowClass, children } = this.props;
-
-        const passthroughProps = except(this.props, ['id', 'key', 'children', 'form', 'rowClass', 'columnDefinitions']);
-        // TODO: key will need to be more robust in case there are multiple tables (maybe pass down the flexable and row keys and aggregate or is React smart enough to figure out if the parent key is different)?
-        const transformedChildren = React.Children.map(children, (c, i) => {
-            const columnDefinition = this.props.columnDefinitions ? this.props.columnDefinitions[i] : Object.create(null);
-            return React.cloneElement(c, { key: `cell-${i}`, ...passthroughProps, ...columnDefinition });
-        });
+        const { className, children, style, key, columnDefinitions } = this.props;
+        const _className = `${ className ? `${className} ` : '' }flexable-row`;
+        const transformChildren = (_children, _passthroughProps) => (React.Children.map(_children, (c, i) => {
+            const columnDefinition = columnDefinitions ? columnDefinitions[i] : Object.create(null);
+            return React.cloneElement(c, { key: `${key}-cell-${i}`, ..._passthroughProps, ...columnDefinition });
+        }));
 
         return (
-            <div className={ `${ rowClass ? `${rowClass} ` : '' }flexable-row` }>
-                { transformedChildren }
-            </div>
+            <FlexableElement key={_key}
+                         style={style}
+                         className={_className}
+                         transformChildren={transformChildren}>
+                {children.length === 0 && columnDefinitions.map((d,i) => {
+                    return (<Cell />)
+                })}
+            </FlexableElement>
         );
     }
 }
 
-export default Row;
+const DefaultRow = RowHOC(DefaultCell);
+
+export default DefaultRow;

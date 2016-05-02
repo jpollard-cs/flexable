@@ -1,33 +1,45 @@
 import React, { Component, PropTypes } from 'react';
 import except from 'except';
 
-import DefaultPassthroughProps from './DefaultPassthroughProps.jsx';
-
 class FlexableElement extends Component {
     static propTypes = {
-        class: PropTypes.string,
+        key: PropTypes.string,
+        className: PropTypes.string,
         style: PropTypes.object,
-        text: PropTypes.string,
-        omitProps: PropTypes.array
+        text: PropTypes.any,
+        omitProps: PropTypes.array,
+        transformChildren: PropTypes.func,
+        generateChildKey: PropTypes.func
     }
 
     render() {
-        const { columnHeaderClass, children, columnHeaderStyle, columnHeaderText } = this.props;
-        const passthroughProps = except(this.props, [...DefaultPassthroughProps, ...omitProps]);
-        const transformedChildren = React.Children.map(children, c => React.cloneElement(c, passthroughProps));
+        const { className, children, style, text, generateChildKey, omitProps } = this.props;
+        let transformChildren = this.props.transformChildren;
+        const passthroughProps = except(this.props, ['id', 'key', 'children', 'form', 'style', 'className', 'transformChildren', 'text', ...omitProps]);
+
+        if (!transformChildren) {
+            if (generateChildKey) {
+                transformChildren = () => React.Children.map(children, (c,i) => React.cloneElement(c, {key: generateChildKey(this.props.key, i), ...passthroughProps}));
+            } else {
+                transformChildren = () => React.Children.map(children, c => React.cloneElement(c, passthroughProps))
+            }
+        }
+
+        const transformedChildren = transformChildren(children, passthroughProps);
 
         return (
-            <div style={columnHeaderStyle} className={ `${ columnHeaderClass ? `${columnHeaderClass} ` : '' }column-header flexable-row-cell` }>
-                { React.Children.count(children) > 0 ? transformedChildren : columnHeaderText }
+            <div key={key} style={style} className={ className }>
+                { React.Children.count(children) > 0 ? transformedChildren : text }
             </div>
         );
     }
 }
 
-ColumnHeader.defaultProps = {
-    columnHeaderText: '',
-    columnHeaderStyle: Object.create(null),
-    omitProps: []
+FlexableElement.defaultProps = {
+    text: '',
+    style: Object.create(null),
+    omitProps: [],
+    className: ''
 }
 
-export default ColumnHeader;
+export default FlexableElement;

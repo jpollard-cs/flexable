@@ -1,10 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import except from 'except';
 
+import FlexableElement from './FlexableElement.jsx';
+
 class Cell extends Component {
     static propTypes = {
-        cellClass: PropTypes.string,
-        cellStyle: PropTypes.object,
+        key: PropTypes.string.isRequired,
+        className: PropTypes.string,
+        style: PropTypes.object,
         rowData: PropTypes.object,
         // propertyMap should be a function that
         // takes the object representing a row
@@ -22,28 +25,26 @@ class Cell extends Component {
         propertyMap: PropTypes.func
     }
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
-        const { cellClass, children, rowData, propertyMap, cellStyle } = this.props;
-        const style = cellStyle ? cellStyle : Object.create(null);
+        const { className, children, rowData, propertyMap, style, key } = this.props;
+        const _className = `${ className ? `${className} ` : '' }flexable-row-cell`;
         if (rowData === undefined || propertyMap === undefined) {
             return (
-                <div style={style} className={ `${ cellClass ? `${cellClass} ` : '' }flexable-row-cell` }>
-                </div>
+                <div style={style} className={_className}></div>
             );
         }
 
         const cellData = propertyMap(rowData);
-        const passthroughProps = except(this.props, ['id', 'key', 'children', 'form', 'cellClass']);
-        const transformedChildren = React.Children.map(children, c => React.cloneElement(c, { ...passthroughProps, cellData }));
+        const passthroughProps = except(this.props, ['className', 'style']);
 
         return (
-            <div style={style} className={ `${ cellClass ? `${cellClass} ` : '' }flexable-row-cell` }>
-                { React.Children.count(children) > 0 ? transformedChildren : (<div>{cellData}</div>) }
-            </div>
+            <FlexableElement key={key}
+                             style={style}
+                             className={_className}
+                             children={children}
+                             cellData={cellData}
+                             text={cellData}
+                             {...passthroughProps}  />
         );
     }
 }
