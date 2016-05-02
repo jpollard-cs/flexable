@@ -1,22 +1,22 @@
 var path = require('path');
 var webpack = require('webpack');
-var SaveAssetsJson = require('assets-webpack-plugin');
 
 function makeConfig(isProd) {
     var plugins = [
-        new webpack.NoErrorsPlugin(),
-        new SaveAssetsJson({
-            path: path.resolve('./static/')
-        })
+        new webpack.NoErrorsPlugin()
     ];
 
     var entry = [
-        './client/index.jsx'
+        './src'
     ];
 
-    var publicPath = '/static/';
+    var publicPath = '/dist/';
 
-    var babelPresets = [];
+    var babelPresets = [
+        "es2015-webpack",
+        // "es2015",
+        "stage-0", 
+        "react"];
 
     var styleLoaders = ['style'];
 
@@ -31,7 +31,15 @@ function makeConfig(isProd) {
                 }
             }),
             new webpack.optimize.DedupePlugin(),
-            // new webpack.optimize.UglifyJsPlugin(),
+            new webpack.optimize.UglifyJsPlugin({
+                compress: {
+                    warnings: false
+                },
+                output: {
+                    comments: false
+                },
+                sourceMap: false
+            }),
             new webpack.LoaderOptionsPlugin({
                 minimize: true,
                 debug: false
@@ -41,7 +49,6 @@ function makeConfig(isProd) {
         styleLoaders = styleLoaders.concat('css', 'sass');
     } else {
         plugins = plugins.concat(
-            new webpack.HotModuleReplacementPlugin(),
             new webpack.DefinePlugin({
                 "process.env": {
                     NODE_ENV: JSON.stringify("development"),
@@ -49,32 +56,53 @@ function makeConfig(isProd) {
                 }
             })
         );
-        entry.unshift('webpack-hot-middleware/client');
-        babelPresets.push('react-hmre');
+
         devtool = 'inline-source-map';
         styleLoaders = styleLoaders.concat('css?sourceMap', 'sass?sourceMap');
     }
 
     var config = {
         entry: entry,
+        node: {
+            fs: "empty"
+        },
+        resolve: {
+            extensions: ['', '.js', '.jsx'],
+            modules: [
+                path.resolve('./src'),
+                'node_modules'
+            ]
+        },
         output: {
-            path: path.join(__dirname, 'static'),
-            filename: isProd ? '[name].[hash].js' : '[name].js',
-            publicPath: '/static/'
+            path: path.join(__dirname, 'dist'),
+            filename: '[name].js',
+            publicPath: publicPath
         },
         module: {
             loaders: [
                 {
+                    loader: "babel-loader",
+
+                    // Skip any files outside of your project's `src` directory
+                    include: [
+                        path.resolve(__dirname, "src"),
+                    ],
+
+                    // Only run `.js` and `.jsx` files through Babel
                     test: /\.jsx?$/,
-                    loader: 'babel',
-                    exclude: /node_modules/,
-                    include: __dirname,
+
+                    // Options to configure babel with
                     query: {
-                        presets: babelPresets
+                        plugins: ['transform-runtime'], // todo this means the babel-runtime is required by anyone using
+                        // this code (may want to create separate build for those not using babel)
+                        presets: babelPresets,
                     }
                 },
                 {
+                    // todo: package compiled css externally from control
                     test: /\.scss$/,
+                    exclude: /node_modules/,
+                    include: path.join(__dirname, 'src/css'),
                     loaders: styleLoaders
                 }
                 /*{
@@ -84,9 +112,12 @@ function makeConfig(isProd) {
                  }*/
             ]
         },
-        devtool: devtool,
         plugins: plugins
     };
+
+    if (!isProd) {
+        config.devtool = devtool;
+    }
 
     return config;
 

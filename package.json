@@ -4,12 +4,38 @@
   "description": "a flexible and lightweight React table control",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rimraf ./dist",
+    "build-dev": "npm run clean && nsp check && webpack --config webpack.config.js",
+    "build-prod": "npm run clean && nsp check && webpack --config webpack-production.config.js"
   },
   "author": "Jordan Pollard",
   "license": "MIT",
   "dependencies": {
+    "babel-polyfill": "^6.7.4",
+    "babel-runtime": "^6.6.1",
     "except": "^0.1.3",
     "react": "^15.0.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.7.5",
+    "babel-core": "^6.7.6",
+    "babel-eslint": "^6.0.2",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-runtime": "^6.7.5",
+    "babel-preset-es2015": "^6.6.0",
+    "babel-preset-es2015-webpack": "^6.4.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "css-loader": "^0.23.1",
+    "eslint": "^2.7.0",
+    "eslint-loader": "^1.3.0",
+    "eslint-plugin-react": "^4.3.0",
+    "json-loader": "^0.5.4",
+    "node-sass": "^3.4.2",
+    "nsp": "^2.3.0",
+    "rimraf": "^2.5.2",
+    "sass-loader": "^3.2.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^2.1.0-beta.5"
   }
 }

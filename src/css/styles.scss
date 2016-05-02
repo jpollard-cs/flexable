@@ -1,3 +1,5 @@
+@import "./_flex-mixin";
+
 .flexable {
   @include flexbox;
   @include flex-direction(column);
