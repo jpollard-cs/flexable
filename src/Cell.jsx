@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import FlexableElement from './FlexableElement.jsx';
 
 const Cell = ({
-    key,
+    _key,
     className,
     style,
     rowData,
@@ -20,7 +20,7 @@ const Cell = ({
     const cellData = propertyMap(rowData);
 
     return (
-        <FlexableElement key={key}
+        <FlexableElement _key={_key}
                          style={style}
                          className={_className}
                          cellData={cellData}
@@ -31,7 +31,7 @@ const Cell = ({
 };
 
 Cell.propTypes = {
-    key: PropTypes.string.isRequired,
+    _key: PropTypes.string,
     className: PropTypes.string,
     style: PropTypes.object,
     rowData: PropTypes.object,

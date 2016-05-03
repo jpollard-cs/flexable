@@ -1,9 +1,14 @@
 var path = require('path');
 var webpack = require('webpack');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var node_modules   = path.resolve(__dirname, 'node_modules');
 
-function makeConfig(isProd) {
+// TODO: make webpack 1 version of this until webpack 2 is stable
+
+function makeConfig(isProd, buildDocs) {
     var plugins = [
-        new webpack.NoErrorsPlugin()
+        new webpack.NoErrorsPlugin(),
+        new ExtractTextPlugin('styles.css', { allChunks: true })
     ];
 
     var entry = [
@@ -69,6 +74,14 @@ function makeConfig(isProd) {
         node: {
             fs: "empty"
         },
+        externals: [{
+            react: {
+                root: 'React',
+                commonjs2: 'react',
+                commonjs: 'react',
+                amd: 'react'
+            }
+        }],
         resolve: {
             extensions: ['', '.js', '.jsx'],
             modules: [
@@ -103,10 +116,9 @@ function makeConfig(isProd) {
                 },
                 {
                     // todo: package compiled css externally from control
-                    test: /\.scss$/,
-                    exclude: /node_modules/,
-                    include: path.join(__dirname, 'src/css'),
-                    loaders: styleLoaders
+                    test: /\.scss/,
+                    // loaders: styleLoaders
+                    loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader')
                 }
                 /*{
                      test: /\.jsx?$/,

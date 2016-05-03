@@ -1,4 +1,4 @@
-function requirePath(folderName) {
+/*function requirePath(folderName) {
     var normalizedPath = require('path').join(__dirname, folderName);
 
     require('fs').readdirSync(normalizedPath).forEach(function(file) {
@@ -7,4 +7,14 @@ function requirePath(folderName) {
 }
 
 requirePath('');
+requirePath('css');*/
+
+export { default as Table } from './Table.jsx';
+export { default as Row } from './Row.jsx';
+export { default as ColumnHeader } from './ColumnHeader.jsx';
+export { default as FlexableElement } from './FlexableElement.jsx';
+export { default as GroupHeaderRow } from './GroupHeaderRow.jsx';
+export { default as Cell } from './Cell.jsx';
+
 requirePath('css');
+// TODO: export HOCs

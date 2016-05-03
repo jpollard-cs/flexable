@@ -2,13 +2,16 @@ import React, { Component, PropTypes } from 'react';
 import except from 'except';
 
 const FlexableElement = ({
-    key,
+    _key,
     id,
     className,
     children,
     style,
     transformChildren,
     text,
+    generateChildKey,
+    omitProps,
+
     ...remainingProps
 }) => {
     let _transformChildren = transformChildren;
@@ -16,7 +19,7 @@ const FlexableElement = ({
 
     if (!_transformChildren) {
         if (generateChildKey) {
-            _transformChildren = () => React.Children.map(children, (c,i) => React.cloneElement(c, { key: generateChildKey(this.props.key, i), ...passthroughProps }));
+            _transformChildren = () => React.Children.map(children, (c,i) => React.cloneElement(c, { key: generateChildKey(_key, i), ...passthroughProps }));
         } else {
             _transformChildren = () => React.Children.map(children, c => React.cloneElement(c, passthroughProps))
         }
@@ -25,14 +28,14 @@ const FlexableElement = ({
     const transformedChildren = _transformChildren(children, passthroughProps);
 
     return (
-        <div id={id} key={key} style={style} className={className}>
+        <div id={id} key={_key} style={style} className={className}>
             { React.Children.count(children) > 0 ? transformedChildren : text }
         </div>
     );
 };
 
 FlexableElement.propTypes = {
-    key: PropTypes.string,
+    _key: PropTypes.string,
     className: PropTypes.string,
     style: PropTypes.object,
     text: PropTypes.any,
