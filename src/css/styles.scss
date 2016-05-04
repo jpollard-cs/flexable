@@ -1,32 +1,42 @@
 @import "./_flex-mixin";
 
-.flexable {
+.flexable{
   @include flexbox;
   @include flex-direction(column);
   @include flex-wrap(nowrap);
   @include justify-content(space-between);
 
-  &-row {
-    width: 100%;
+  &-row{
     @include flexbox;
     @include flex-direction(row);
     @include flex-wrap(nowrap);
+    width: 100%;
 
-    &-cell {
+    &-cell{
+      @include align-items(center);
       @include flexbox;
-      @include flex-direction(row);
       @include flex-wrap(nowrap);
       @include flex-grow(1);
       @include flex-basis(0);
-      @include align-items(center);
+      @include flex-direction(row);
       @include justify-content(flex-end);
-
-      padding: 0.5em;
       border: 1px solid black;
-      word-wrap: break-word;
+      padding: 0.5em;
       word-break: break-all;
+      word-wrap: break-word;
+
+      &.column-header, &.group-header-row, &.row-name{
+        @include justify-content(flex-start);
+        font-weight: bold;
+      }
     }
   }
+}
+
+.flexable-vertical-scroll-overlay {
+  overflow-x: hidden; /*todo: remove once implement horizontal scroll behavior*/
+  overflow-y: overlay;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
 }
 
 /* utility styles */
