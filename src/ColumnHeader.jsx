@@ -12,9 +12,9 @@ const ColumnHeader = ({
 
     return (
         <FlexableElement style={style}
-                     className={_className}
-                     text={text}
-                     {...remainingProps} />
+                         className={_className}
+                         text={text}
+                         {...remainingProps} />
     );
 }
 

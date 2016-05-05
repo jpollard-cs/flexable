@@ -6,30 +6,31 @@ const FlexableElement = ({
     id,
     className,
     children,
+    _children,
     style,
     transformChildren,
     text,
     generateChildKey,
     omitProps,
-
     ...remainingProps
 }) => {
+    let kids = children ? children : _children;
     let _transformChildren = transformChildren;
     const passthroughProps = except(remainingProps, [...omitProps]);
 
     if (!_transformChildren) {
         if (generateChildKey) {
-            _transformChildren = () => React.Children.map(children, (c,i) => React.cloneElement(c, { key: generateChildKey(_key, i), ...passthroughProps }));
+            _transformChildren = () => React.Children.map(kids, (c,i) => React.cloneElement(c, { key: generateChildKey(_key, i), ...passthroughProps }));
         } else {
-            _transformChildren = () => React.Children.map(children, c => React.cloneElement(c, passthroughProps))
+            _transformChildren = () => React.Children.map(kids, c => React.cloneElement(c, passthroughProps))
         }
     }
 
-    const transformedChildren = _transformChildren(children, passthroughProps);
+    const transformedChildren = _transformChildren(kids, passthroughProps);
 
     return (
         <div id={id} key={_key} style={style} className={className}>
-            { React.Children.count(children) > 0 ? transformedChildren : text }
+            { React.Children.count(kids) > 0 ? transformedChildren : text }
         </div>
     );
 };
