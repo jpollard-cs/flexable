@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
-import FlexableElement from './FlexableElement.jsx';
-import DefaultRow from './Row.jsx';
+import FlexableElement from './FlexableElement';
+import DefaultRow from './Row';
 
 export const TableBodyHOC = (Row) => ({
     className,

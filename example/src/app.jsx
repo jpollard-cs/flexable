@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Table from '../../src/Table.jsx';
-import Row from '../../src/Row.jsx';
+import Table from '../../lib/Table'
 import '!style!css!../../dist/flexable.css';
 import '!style!css!./example.css';
 // TODO: figure out why isn't working to import { Table } from distributable

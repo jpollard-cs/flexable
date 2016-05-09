@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
-import DefaultTableBody from './TableBody.jsx';
-import DefaultTableHeader from './TableHeader.jsx';
+import DefaultTableBody from './TableBody';
+import DefaultTableHeader from './TableHeader';
 
 export const TableHOC = (TableBody, TableHeader) => ({
     tableData,

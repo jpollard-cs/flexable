@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import FlexableElement from './FlexableElement.jsx';
+import FlexableElement from './FlexableElement';
 
 const Cell = ({
     _key,

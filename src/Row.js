@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
-import FlexableElement from './FlexableElement.jsx';
-import DefaultCell from './Cell.jsx';
+import FlexableElement from './FlexableElement';
+import DefaultCell from './Cell';
 
 export const RowHOC = (Cell) => ({
     _key,

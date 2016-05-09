@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 
-import FlexableElement from './FlexableElement.jsx';
-import ColumnHeaderCell from './ColumnHeader.jsx';
-import { RowHOC } from './Row.jsx';
+import FlexableElement from './FlexableElement';
+import ColumnHeaderCell from './ColumnHeader';
+import { RowHOC } from './Row';
 
 export const TableHeaderHOC = (ColumnHeaderRow) => ({
     className,
