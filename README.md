@@ -1,11 +1,12 @@
 # flexable
 a flexible and lightweight React table control
 
-# TODO:
+## todo
 - update docs with more examples and use cases
 - get build process working properly => does ExtractTextPlugin work with Webpack 2 beta?
+- add enzyme tests
 
-## License
+## license
 ```
 The MIT License (MIT)
 Copyright (c) 2016 C Space
