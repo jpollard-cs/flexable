@@ -1,5 +1,5 @@
 # flexable
-a flexible and lightweight React table control
+a flexible and lightweight React table control that uses flexbox out of the box (but doesn't have to)
 
 ## todo
 - update docs with more examples and use cases
