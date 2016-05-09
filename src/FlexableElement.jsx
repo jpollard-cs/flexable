@@ -6,7 +6,7 @@ const FlexableElement = ({
     id,
     className,
     children,
-    _children,
+    _children, // since we React can override provided children props
     style,
     transformChildren,
     text,

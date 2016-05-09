@@ -13,13 +13,12 @@ const GroupHeaderRow = ({
     const generateChildKey = (k, i) => `group-header-cell-${k}-${i}`;
 
     return (
-        <FlexableElement style={style}
+        <FlexableElement {...remainingProps}
+                         style={style}
                          _key={_key}
                          className={_className}
                          generateChildKey={generateChildKey}
-                         text={text} 
-                         {...remainingProps}
-                        />
+                         text={text} />
     );
 };
 

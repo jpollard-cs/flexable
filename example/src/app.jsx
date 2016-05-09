@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Table from '../../src/Table.jsx';
 import Row from '../../src/Row.jsx';
 import '!style!css!../../dist/flexable.css';
+import '!style!css!./example.css';
 // TODO: figure out why isn't working to import { Table } from distributable
 
 const data = [{
@@ -71,12 +72,13 @@ const columnDefinitions = [{
     className: 'utility-flex-grow-3 row-name',
     style: {},
     propertyMap: (r) => r.name,
-    columnHeaderClass: 'utility-flex-grow-3',
+    columnHeaderClassName: 'utility-flex-grow-3',
     columnHeaderStyle: {},
     columnHeaderText: 'Name'
 }, {
     propertyMap: (r) => r.age,
-    columnHeaderText: 'Age'
+    columnHeaderText: 'Age',
+    columnHeaderClassName : ''
 }];
 
 ReactDOM.render(

@@ -161,18 +161,9 @@
 }
 
 .flexable-vertical-scroll-overlay {
-    overflow-x: hidden; /*todo: remove once implement horizontal scroll behavior*/
+    overflow-x: hidden;
     overflow-y: overlay;
     -ms-overflow-style: -ms-autohiding-scrollbar;
-}
-
-/* custom styles: TODO: move into example */
-.column-header, .group-header-row {
-    background: lightblue;
-}
-
-.row-name {
-    background: #ffbea6;
 }
 
 .row-name, .column-header, .group-header-row {

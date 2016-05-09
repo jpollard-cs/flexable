@@ -10,7 +10,7 @@ export const RowHOC = (Cell) => ({
     rowData,
     columnDefinitions,
     children,
-    includeVerticalScrollCell,
+    includeVerticalScrollbar,
     ...remainingProps
 }) => {
     const _className = `${ className ? `${className} ` : '' }flexable-row`;
@@ -21,15 +21,15 @@ export const RowHOC = (Cell) => ({
 
     if(!children) {
         return (
-            <FlexableElement _key={_key}
+            <FlexableElement {...remainingProps}
+                             _key={_key}
                              style={style}
                              className={_className}
-                             transformChildren={transformChildren}
-                             {...remainingProps}>
+                             transformChildren={transformChildren} >
                 {!children && columnDefinitions.map(() => {
                     return (<Cell />)
                 })}
-                {includeVerticalScrollCell &&
+                {includeVerticalScrollbar &&
                     <div style={{ width: 25 }}></div>}
             </FlexableElement>
         );
@@ -37,14 +37,14 @@ export const RowHOC = (Cell) => ({
 
     // TODO: test
     return (
-        <FlexableElement _key={_key}
+        <FlexableElement {...remainingProps}
+                         _key={_key}
                          style={style}
                          className={_className}
-                         transformChildren={transformChildren}
-                         {...remainingProps}>
-            {includeVerticalScrollCell &&
+                         transformChildren={transformChildren} >
+            {includeVerticalScrollbar &&
                 children }
-            {includeVerticalScrollCell &&
+            {includeVerticalScrollbar &&
                 <div style={{ width: 25 }}></div> }
         </FlexableElement>
     );
@@ -56,11 +56,11 @@ RowHOC.propTypes = {
     style: PropTypes.object,
     rowData: PropTypes.object,
     columnDefinitions: PropTypes.array,
-    includeVerticalScrollCell: PropTypes.bool
+    includeVerticalScrollbar: PropTypes.bool
 };
 
 RowHOC.defaultProps = {
-    includeVerticalScrollCell: true
+    includeVerticalScrollbar: true
 };
 
 const DefaultRow = RowHOC(DefaultCell);

@@ -15,6 +15,8 @@ export { default as ColumnHeader } from './ColumnHeader.jsx';
 export { default as FlexableElement } from './FlexableElement.jsx';
 export { default as GroupHeaderRow } from './GroupHeaderRow.jsx';
 export { default as Cell } from './Cell.jsx';
+export { default as TableBody } from './TableBody.jsx';
+export { default as TableHeader } from './TableHeader.jsx';
 
 requirePath('css');
 // TODO: export HOCs
