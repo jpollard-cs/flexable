@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import except from 'except';
 
 import FlexableElement from './FlexableElement';
 import DefaultCell from './Cell';
@@ -16,7 +17,8 @@ export const RowHOC = (Cell) => ({
     const _className = `${ className ? `${className} ` : '' }flexable-row`;
     const transformChildren = (_children, _passthroughProps) => (React.Children.map(_children, (c, i) => {
         const columnDefinition = columnDefinitions ? columnDefinitions[i] : Object.create(null);
-        return React.cloneElement(c, { key: `${_key}-cell-${i}`, ..._passthroughProps, ...columnDefinition, rowData });
+        const props = except({..._passthroughProps, ...columnDefinition, rowData }, remainingProps.omitProps || []);
+        return React.cloneElement(c, { key: `${_key}-cell-${i}`, ...props });
     }));
 
     if(!children) {
@@ -34,8 +36,7 @@ export const RowHOC = (Cell) => ({
             </FlexableElement>
         );
     }
-
-    // TODO: test
+    
     return (
         <FlexableElement {...remainingProps}
                          _key={_key}

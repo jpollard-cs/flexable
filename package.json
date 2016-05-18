@@ -1,11 +1,11 @@
 {
   "name": "flexable",
-  "version": "0.1.0",
+  "version": "0.1.4",
   "description": "a flexible and lightweight React table control",
   "main": "index.js",
   "scripts": {
     "clean": "rimraf ./dist",
-    "prepublish": "babel ./src --out-dir ./lib --source-maps --presets es2015,stage-0,react --plugins babel-plugin-add-module-exports",
+    "prepublish": "nsp check && babel ./src --out-dir ./lib --source-maps --presets es2015,stage-0,react --plugins babel-plugin-add-module-exports",
     "prepublish-es2015-modules": "babel ./src --out-dir ./lib --source-maps --presets es2015-webpack,stage-0,react --plugins babel-plugin-add-module-exports",
     "build-dev": "nsp check && webpack --config webpack.config.js",
     "build-prod": "nsp check && webpack --config webpack-production.config.js",
@@ -19,6 +19,10 @@
     "except": "^0.1.3",
     "react": "^15.0.1",
     "react-dom": "^15.0.2"
+  },
+  "peerDependencies": {
+    "except": "0.1.x",
+    "react": "15.x"
   },
   "devDependencies": {
     "babel-cli": "^6.7.5",

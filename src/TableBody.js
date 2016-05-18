@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
+import FlexableComponent from './FlexableComponent';
 import FlexableElement from './FlexableElement';
 import DefaultRow from './Row';
 
@@ -11,6 +12,7 @@ export const TableBodyHOC = (Row) => ({
     rowClassName,
     rowStyle,
     includeVerticalScrollbar,
+    setRef,
     ...remainingProps
 }) => {
     const _className = `${includeVerticalScrollbar ? 'flexable-vertical-scroll-overlay' : ''}${ className ? ` ${className}`: '' }`;
@@ -26,16 +28,31 @@ export const TableBodyHOC = (Row) => ({
         });
     }));
 
+    if (!setRef) {
+        return (
+            <FlexableElement {...remainingProps}
+                id="flexable-table-body"
+                className={_className}
+                style={style}
+                transformChildren={transformRows('row')}>
+                {!remainingProps.children && tableData.map(() => {
+                    return (<Row />)
+                })}
+            </FlexableElement>
+        )
+    }
+
     return (
-        <FlexableElement {...remainingProps}
+        <FlexableComponent {...remainingProps}
                          id="flexable-table-body"
+                         ref={setRef}
                          className={_className}
                          style={style}
                          transformChildren={transformRows('row')}>
             {!remainingProps.children && tableData.map(() => {
                 return (<Row />)
             })}
-        </FlexableElement>
+        </FlexableComponent>
     );
 };
 
@@ -46,7 +63,8 @@ TableBodyHOC.propTypes = {
     rowStyle: PropTypes.object,
     tableData: PropTypes.object,
     columnDefinitions: PropTypes.array,
-    includeVerticalScrollbar: PropTypes.bool
+    includeVerticalScrollbar: PropTypes.bool,
+    setRef: PropTypes.func
 };
 
 TableBodyHOC.defaultProps = {
