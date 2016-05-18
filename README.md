@@ -6,7 +6,8 @@ a flexible and lightweight React table control that uses flexbox out of the box 
 - get build process working properly => does ExtractTextPlugin work with Webpack 2 beta?
 - add enzyme tests
 - can now build distributable js files through `prepublish` task in package.json and lighter weight distributable files in `prepublish-es2015-modules` task (for those who are transpiling import/export statements)
-    - still need to figure out how to best build and package SASS files with 
+    - still need to figure out how to best build and package SASS files with distributable (want to package in separate file to make sure is still useful for isomorphic/universal apps)
+- integrate linting rules to enforce during build process
 
 ## license
 ```
