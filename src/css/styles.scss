@@ -6,6 +6,11 @@
   @include flex-wrap(nowrap);
   @include justify-content(space-between);
 
+  &-scroll-cell {
+    width: 25px;
+    background-color: white;
+  }
+
   &-row{
     @include flexbox;
     @include flex-direction(row);

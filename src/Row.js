@@ -32,7 +32,7 @@ export const RowHOC = (Cell) => ({
                     return (<Cell />)
                 })}
                 {includeVerticalScrollbar &&
-                    <div style={{ width: 25 }}></div>}
+                    <div className="flexable-scroll-cell"></div>}
             </FlexableElement>
         );
     }
@@ -46,7 +46,7 @@ export const RowHOC = (Cell) => ({
             {includeVerticalScrollbar &&
                 children }
             {includeVerticalScrollbar &&
-                <div style={{ width: 25 }}></div> }
+                <div className="flexable-scroll-cell"></div> }
         </FlexableElement>
     );
 };

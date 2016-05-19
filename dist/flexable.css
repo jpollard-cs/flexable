@@ -20,6 +20,12 @@
     -moz-justify-content: space-between;
     justify-content: space-between;
 }
+
+.flexable-scroll-cell {
+    width: 25px;
+    background-color: white;
+}
+
 .flexable-row {
     width: 100%;
     display: -webkit-box;
