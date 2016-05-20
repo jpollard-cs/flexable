@@ -9,7 +9,6 @@ const ColumnHeader = ({
     ...remainingProps
 }) => {
     const className = `${ columnHeaderClassName ? `${columnHeaderClassName} ` : '' }column-header flexable-row-cell`;
-
     return (
         <FlexableElement {...remainingProps}
                          style={columnHeaderStyle}

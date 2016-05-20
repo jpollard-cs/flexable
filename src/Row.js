@@ -18,18 +18,17 @@ export const RowHOC = (Cell) => ({
     const transformChildren = (_children, _passthroughProps) => (React.Children.map(_children, (c, i) => {
         const columnDefinition = columnDefinitions ? columnDefinitions[i] : Object.create(null);
         const props = except({..._passthroughProps, ...columnDefinition, rowData }, remainingProps.omitProps || []);
-        return React.cloneElement(c, { key: `${_key}-cell-${i}`, ...props });
+        return React.cloneElement(c, props);
     }));
 
     if(!children) {
         return (
             <FlexableElement {...remainingProps}
-                             _key={_key}
                              style={style}
                              className={_className}
                              transformChildren={transformChildren} >
-                {!children && columnDefinitions.map(() => {
-                    return (<Cell />)
+                {!children && columnDefinitions.map((d, i) => {
+                    return (<Cell key={`${_key}-cell-${i}`} />)
                 })}
                 {includeVerticalScrollbar &&
                     <div className="flexable-scroll-cell"></div>}
@@ -39,7 +38,6 @@ export const RowHOC = (Cell) => ({
     
     return (
         <FlexableElement {...remainingProps}
-                         _key={_key}
                          style={style}
                          className={_className}
                          transformChildren={transformChildren} >
@@ -52,7 +50,7 @@ export const RowHOC = (Cell) => ({
 };
 
 RowHOC.propTypes = {
-    _key: PropTypes.string,
+    _key: PropTypes.string.isRequired,
     className: PropTypes.string,
     style: PropTypes.object,
     rowData: PropTypes.object,
@@ -67,43 +65,3 @@ RowHOC.defaultProps = {
 const DefaultRow = RowHOC(DefaultCell);
 
 export default DefaultRow;
-
-/*import React, { Component, PropTypes } from 'react';
-
-import FlexableElement from './FlexableElement.jsx';
-import DefaultCell from './Cell.jsx';
-
-export const RowHOC = (Cell) => class Row extends Component {
-
-    static propTypes = {
-        key: PropTypes.string.isRequired,
-        className: PropTypes.string,
-        style: PropTypes.object,
-        rowData: PropTypes.object,
-        columnDefinitions: PropTypes.array
-    };
-
-    render() {
-        const _className = `${ className ? `${className} ` : '' }flexable-row`;
-        const transformChildren = (_children, _passthroughProps) => (React.Children.map(_children, (c, i) => {
-            const columnDefinition = columnDefinitions ? columnDefinitions[i] : Object.create(null);
-            return React.cloneElement(c, { key: `${_key}-cell-${i}`, ..._passthroughProps, ...columnDefinition, rowData });
-        }));
-
-        return (
-            <FlexableElement key={_key}
-                style={style}
-                className={_className}
-                transformChildren={transformChildren}
-                {...remainingProps}>
-                {children.length === 0 && columnDefinitions.map(() => {
-                    return (<Cell />)
-                })}
-            </FlexableElement>
-        );
-    }
-}
-
-const DefaultRow = RowHOC(DefaultCell);
-
-export default DefaultRow;*/

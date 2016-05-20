@@ -16,7 +16,7 @@ export const TableHeaderHOC = (ColumnHeaderRow) => ({
 }) => {
     const transformRows = (keyPrefix) => (children, passthroughProps) => (React.Children.map(children, (c, i) => {
         return React.cloneElement(c, {
-            key: `${keyPrefix}-${i}`,
+            _key: `${keyPrefix}-${i}`,
             style: rowStyle,
             className: rowClassName,
             columnDefinitions: columnDefinitions,
@@ -33,7 +33,7 @@ export const TableHeaderHOC = (ColumnHeaderRow) => ({
             style={style}
             transformChildren={transformRows('header-row')}>
             {!remainingProps.children &&
-                <ColumnHeaderRow />}
+                <ColumnHeaderRow key={`header-row`} />}
         </FlexableElement>
     );
 };
