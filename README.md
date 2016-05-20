@@ -1,6 +1,11 @@
 # flexable
 a flexible and lightweight React table control that uses flexbox out of the box (but doesn't have to)
 
+## installation
+```
+npm install flexable
+```
+
 ## todo
 - update docs with more examples and use cases
 - get build process working properly => does ExtractTextPlugin work with Webpack 2 beta?
