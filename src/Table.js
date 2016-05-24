@@ -15,20 +15,23 @@ export const TableHOC = (TableBody, TableHeader) => ({
     tableHeaderStyle,
     tableHeaderClassName,
     includeVerticalScrollbar,
-    setTableBodyRef
+    setTableBodyRef,
+    ...remainingProps
 }) => {
     const _className = `${ className ? `${className} ` : '' }table flexable`;
 
     return (
         <div style={style} className={_className}>
-            <TableHeader style={tableHeaderStyle}
+            <TableHeader {...remainingProps}
+                         style={tableHeaderStyle}
                          className={tableHeaderClassName}
                          tableData={tableData}
                          columnDefinitions={columnDefinitions}
                          rowClassName={rowClassName}
                          rowStyle={rowStyle}
                          includeVerticalScrollbar={includeVerticalScrollbar} />
-            <TableBody style={tableBodyStyle}
+            <TableBody {...remainingProps}
+                       style={tableBodyStyle}
                        className={tableBodyClassName}
                        tableData={tableData}
                        columnDefinitions={columnDefinitions}
