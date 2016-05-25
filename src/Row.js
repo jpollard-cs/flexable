@@ -16,37 +16,41 @@ export const RowHOC = (Cell) => ({
 }) => {
     const _className = `${ className ? `${className} ` : '' }flexable-row`;
     const transformChildren = (_children, _passthroughProps) => (React.Children.map(_children, (c, i) => {
+        if (!React.isValidElement(c)) {
+           return c;
+        }
         const columnDefinition = columnDefinitions ? columnDefinitions[i] : Object.create(null);
         const props = except({..._passthroughProps, ...columnDefinition, rowData }, remainingProps.omitProps || []);
         return React.cloneElement(c, props);
     }));
 
-    if(!children) {
+    if(!children){
         return (
             <FlexableElement {...remainingProps}
-                             style={style}
-                             className={_className}
-                             transformChildren={transformChildren} >
-                {!children && columnDefinitions.map((d, i) => {
+                style={style}
+                className={_className}
+                transformChildren={transformChildren} >
+                {columnDefinitions.map((d, i) => {
                     return (<Cell key={`${_key}-cell-${i}`} />)
                 })}
-                {includeVerticalScrollbar &&
-                    <div className="flexable-scroll-cell"></div>}
+                {includeVerticalScrollbar
+                    ? <div className="flexable-scroll-cell"></div>
+                    : undefined }
             </FlexableElement>
         );
     }
-    
+
     return (
         <FlexableElement {...remainingProps}
-                         style={style}
-                         className={_className}
-                         transformChildren={transformChildren} >
-            {includeVerticalScrollbar &&
-                children }
-            {includeVerticalScrollbar &&
-                <div className="flexable-scroll-cell"></div> }
+            style={style}
+            className={_className}
+            transformChildren={transformChildren} >
+            {children}
+            {includeVerticalScrollbar === true &&
+                <div className="flexable-scroll-cell"></div>}
         </FlexableElement>
     );
+
 };
 
 RowHOC.propTypes = {

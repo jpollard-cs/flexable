@@ -26,16 +26,27 @@ export const TableHeaderHOC = (ColumnHeaderRow) => ({
         });
     }));
 
+    if(!remainingProps.children) {
+        return (
+            <FlexableElement {...remainingProps}
+                id="flexable-table-header"
+                className={className}
+                style={style}
+                transformChildren={transformRows('header-row')}>
+                <ColumnHeaderRow key={`header-row`} />
+            </FlexableElement>
+        );
+    }
+
     return (
         <FlexableElement {...remainingProps}
             id="flexable-table-header"
             className={className}
             style={style}
             transformChildren={transformRows('header-row')}>
-            {!remainingProps.children &&
-                <ColumnHeaderRow key={`header-row`} />}
+            {remainingProps.children}
         </FlexableElement>
-    );
+    )
 };
 
 TableHeaderHOC.propTypes = {

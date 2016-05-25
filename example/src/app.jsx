@@ -77,7 +77,9 @@ const columnDefinitions = [{
 }, {
     propertyMap: (r) => r.age,
     columnHeaderText: 'Age',
-    columnHeaderClassName : ''
+    columnHeaderClassName : '',
+    columnHeaderStyle: {},
+    columnHeaderText: 'Name'
 }];
 
 ReactDOM.render(

@@ -17,7 +17,13 @@ const FlexableElement = ({
     const passthroughProps = except(remainingProps, [...omitProps]);
 
     if (!_transformChildren) {
-        _transformChildren = () => React.Children.map(kids, c => React.cloneElement(c, passthroughProps))
+        _transformChildren = () => React.Children.map(kids, c => {
+            // in trash, out trash
+            if (!React.isValidElement(c)) {
+                return c;
+            }
+            return React.cloneElement(c, passthroughProps);
+        })
     }
 
     const transformedChildren = _transformChildren(kids, passthroughProps);
