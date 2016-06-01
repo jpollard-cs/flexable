@@ -16,6 +16,7 @@ export const TableHOC = (TableBody, TableHeader) => ({
     tableHeaderClassName,
     includeVerticalScrollbar,
     setTableBodyRef,
+    setTableHeaderRef,
     ...remainingProps
 }) => {
     const _className = `${ className ? `${className} ` : '' }table flexable`;
@@ -29,6 +30,7 @@ export const TableHOC = (TableBody, TableHeader) => ({
                          columnDefinitions={columnDefinitions}
                          rowClassName={rowClassName}
                          rowStyle={rowStyle}
+                         setRef={setTableHeaderRef}
                          includeVerticalScrollbar={includeVerticalScrollbar} />
             <TableBody {...remainingProps}
                        style={tableBodyStyle}

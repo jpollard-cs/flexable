@@ -17,6 +17,9 @@ export const TableBodyHOC = (Row) => ({
 }) => {
     const _className = `${includeVerticalScrollbar ? 'flexable-vertical-scroll-overlay' : ''}${ className ? ` ${className}`: '' }`;
     const transformRows = (keyPrefix) => (children, passthroughProps) => (React.Children.map(children, (c, i) => {
+        if (!React.isValidElement(c)) {
+            return c;
+        }
         return React.cloneElement(c, {
             _key: `${keyPrefix}-${i}`,
             style: rowStyle,
@@ -38,6 +41,8 @@ export const TableBodyHOC = (Row) => ({
                 {!remainingProps.children && tableData.map((d, i) => {
                     return (<Row key={`row-${i}`}/>)
                 })}
+                {!!remainingProps.children &&
+                    remainingProps.children}
             </FlexableElement>
         )
     }
@@ -52,6 +57,8 @@ export const TableBodyHOC = (Row) => ({
             {!remainingProps.children && tableData.map((d, i) => {
                 return (<Row key={`row-${i}`}/>)
             })}
+            {!!remainingProps.children &&
+                remainingProps.children}
         </FlexableComponent>
     );
 };

@@ -11,10 +11,15 @@ export const TableHeaderHOC = (ColumnHeaderRow) => ({
     columnDefinitions,
     rowClassName,
     rowStyle,
+    setRef,
     includeVerticalScrollbar,
     ...remainingProps
 }) => {
     const transformRows = (keyPrefix) => (children, passthroughProps) => (React.Children.map(children, (c, i) => {
+        if (!React.isValidElement(c)) {
+            return c;
+        }
+        
         return React.cloneElement(c, {
             _key: `${keyPrefix}-${i}`,
             style: rowStyle,
@@ -26,27 +31,34 @@ export const TableHeaderHOC = (ColumnHeaderRow) => ({
         });
     }));
 
-    if(!remainingProps.children) {
+    if(!setRef) {
         return (
             <FlexableElement {...remainingProps}
                 id="flexable-table-header"
                 className={className}
                 style={style}
                 transformChildren={transformRows('header-row')}>
-                <ColumnHeaderRow key={`header-row`} />
+                {!remainingProps.children &&
+                    <ColumnHeaderRow key={`header-row`}/>}
+                {!!remainingProps.children &&
+                    remainingProps.children}
             </FlexableElement>
         );
     }
 
     return (
-        <FlexableElement {...remainingProps}
+        <FlexableComponent {...remainingProps}
             id="flexable-table-header"
+            ref={setRef}
             className={className}
             style={style}
             transformChildren={transformRows('header-row')}>
-            {remainingProps.children}
-        </FlexableElement>
-    )
+            {!remainingProps.children &&
+                <ColumnHeaderRow key={`header-row`}/>}
+            {!!remainingProps.children &&
+                remainingProps.children}
+        </FlexableComponent>
+    );
 };
 
 TableHeaderHOC.propTypes = {
@@ -56,6 +68,7 @@ TableHeaderHOC.propTypes = {
     rowStyle: PropTypes.object,
     tableData: PropTypes.object,
     columnDefinitions: PropTypes.array,
+    setRef: PropTypes.func,
     includeVerticalScrollbar: PropTypes.bool
 };
 
