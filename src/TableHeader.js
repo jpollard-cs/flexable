@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
 import FlexableElement from './FlexableElement';
+import FlexableComponent from './FlexableComponent';
 import ColumnHeaderCell from './ColumnHeader';
 import { RowHOC } from './Row';
 

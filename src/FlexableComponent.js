@@ -9,7 +9,13 @@ class FlexableComponent extends Component  {
         const passthroughProps = except(remainingProps, omitProps);
 
         if (!_transformChildren) {
-            _transformChildren = () => React.Children.map(kids, c => React.cloneElement(c, passthroughProps))
+            _transformChildren = () => React.Children.map(kids, c => {
+                // (trash) => trash;
+                if (!React.isValidElement(c)) {
+                    return c;
+                }
+                return React.cloneElement(c, passthroughProps);
+            })
         }
 
         const transformedChildren = _transformChildren(kids, passthroughProps);
