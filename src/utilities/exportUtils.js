@@ -34,5 +34,5 @@ export function safeConvertToCsvRecord(record, delimeter = ',') {
         result = `${quote}${result}${quote}`;
     }
 
-    return result; // isNaN(record) ? `"${record}"` : Number(record);
+    return result;
 }
