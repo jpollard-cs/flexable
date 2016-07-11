@@ -1,10 +1,10 @@
 import { stringContainsAny } from './stringUtils';
 
-export function convertToCsvString(columnDefinitions, columnHeaderDefinition, data, options = {}, formatRows = defaultFormatRow, formatHeaderRow = defaultFormatHeaderRow) {
+export function convertToCsvString(columnDefinitions, data, options = {}, formatRows = defaultFormatRow, formatHeaderRow = defaultFormatHeaderRow) {
     let { utf8Bom, delimeter } = options;
     delimeter = delimeter ? delimeter : ',';
     let result = utf8Bom === false  ? '': '\ufeff';
-    const header = `${formatHeaderRow(columnHeaderDefinition, delimeter)}\r\n`;
+    const header = `${formatHeaderRow(columnDefinitions, delimeter)}\r\n`;
     const rows = data.map(r => formatRows(r, columnDefinitions, delimeter)).join('\r\n');
     result = `${result}${header}${rows}`;
     return result;
@@ -16,8 +16,8 @@ export function defaultFormatRow(row, columnDefinitions, delimeter) {
         .join(delimeter);
 }
 
-export function defaultFormatHeaderRow(columnHeaderDefinition, delimeter) {
-    return columnHeaderDefinition
+export function defaultFormatHeaderRow(columnDefinitions, delimeter) {
+    return columnDefinitions
         .map(d => safeConvertToCsvRecord(d.columnHeaderText, delimeter))
         .join(delimeter);
 }

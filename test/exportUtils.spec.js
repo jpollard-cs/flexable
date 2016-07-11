@@ -49,17 +49,17 @@ describe('exportUtils', () => {
 
     describe('convertToCsvString', () => {
         it('returns expected result when utf8Bom option is true', () => {
-            expect(convertToCsvString(columnDefinitions, columnDefinitions, data, { utf8Bom: true }))
+            expect(convertToCsvString(columnDefinitions, data, { utf8Bom: true }))
                 .to.equal('\ufeffName,X Dollars ($),Y Units\r\ntest 1,$24.00,12\r\ntest 2,$28.00,14');
         });
 
         it('returns expected result when utf8Bom option is false', () => {
-            expect(convertToCsvString(columnDefinitions, columnDefinitions, data, { utf8Bom: false }))
+            expect(convertToCsvString(columnDefinitions, data, { utf8Bom: false }))
                 .to.equal('Name,X Dollars ($),Y Units\r\ntest 1,$24.00,12\r\ntest 2,$28.00,14');
         });
 
         it('returns expected result when delimeter option is tab', () => {
-            expect(convertToCsvString(columnDefinitions, columnDefinitions, data, { utf8Bom: true, delimeter: '    ' }))
+            expect(convertToCsvString(columnDefinitions, data, { utf8Bom: true, delimeter: '    ' }))
                 .to.equal('\ufeffName    X Dollars ($)    Y Units\r\ntest 1    $24.00    12\r\ntest 2    $28.00    14');
         });
     });
