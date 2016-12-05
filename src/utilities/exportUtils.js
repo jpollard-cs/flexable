@@ -15,7 +15,7 @@ export function defaultFormatRow(row, columnDefinitions, delimeter) {
         .map(d => {
             let cellDefinition = d;
             if (typeof d.defineCell === 'function') {
-                cellDefinition = d.defineCell(row);
+                cellDefinition = { ...d, ...d.defineCell(row) };
             }
             return safeConvertToCsvRecord(cellDefinition.propertyMap(row), delimeter)
         })

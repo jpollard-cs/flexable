@@ -11,7 +11,7 @@ function makeDocsConfig() {
                 BROWSER: JSON.stringify(true)
             }
         }),
-        new ExtractTextPlugin('./example/dist/css/styles.css')
+        new ExtractTextPlugin({ filename: './example/dist/css/styles.css' })
     ];
 
     var entry = [
@@ -25,10 +25,7 @@ function makeDocsConfig() {
         "stage-0",
         "react"];
 
-    var styleLoaders = ['style'];
-
     devtool = 'inline-source-map';
-    styleLoaders = styleLoaders.concat('css?sourceMap', 'sass?sourceMap');
 
     var config = {
         entry: entry,
@@ -36,7 +33,7 @@ function makeDocsConfig() {
             fs: "empty"
         },
         resolve: {
-            extensions: ['', '.js', '.jsx'],
+            extensions: ['.js', '.jsx'],
             modules: [
                 path.resolve('./example/src'),
                 path.resolve(__dirname, "node_modules")
@@ -70,8 +67,7 @@ function makeDocsConfig() {
                     test: /\.scss$/,
                     exclude: /node_modules/,
                     include: path.join(__dirname, 'src/css'), // TODO: change back to example/src/css once using distributable
-                    loader: ExtractTextPlugin.extract( "style", "css!sass")
-                    //loaders: styleLoaders
+                    loader: ExtractTextPlugin.extract( { fallbackLoader: "style-loader", loader: "css-loader!sass" })
                 },
             ]
         },
