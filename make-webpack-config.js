@@ -8,7 +8,7 @@ var node_modules   = path.resolve(__dirname, 'node_modules');
 function makeConfig(isProd, buildDocs) {
     var plugins = [
         new webpack.NoErrorsPlugin(),
-        new ExtractTextPlugin('styles.css', { allChunks: true })
+        new ExtractTextPlugin({ filename: 'styles.css', allChunks: true })
     ];
 
     var entry = [
@@ -18,12 +18,9 @@ function makeConfig(isProd, buildDocs) {
     var publicPath = '/dist/';
 
     var babelPresets = [
-        "es2015-webpack",
-        // "es2015",
-        "stage-0", 
+        "es2015",
+        "stage-0",
         "react"];
-
-    var styleLoaders = ['style'];
 
     var devtool = 'eval';
 
@@ -53,7 +50,6 @@ function makeConfig(isProd, buildDocs) {
             })
         );
 
-        styleLoaders = styleLoaders.concat('css', 'sass');
         fileName += '.min';
     } else {
         plugins = plugins.concat(
@@ -66,7 +62,6 @@ function makeConfig(isProd, buildDocs) {
         );
 
         devtool = 'inline-source-map';
-        styleLoaders = styleLoaders.concat('css?sourceMap', 'sass?sourceMap');
     }
 
     var config = {
@@ -83,7 +78,7 @@ function makeConfig(isProd, buildDocs) {
             }
         }],
         resolve: {
-            extensions: ['', '.js', '.jsx'],
+            extensions: ['.js', '.jsx'],
             modules: [
                 path.resolve('./src'),
                 'node_modules'
@@ -118,7 +113,7 @@ function makeConfig(isProd, buildDocs) {
                     // todo: package compiled css externally from control
                     test: /\.scss/,
                     // loaders: styleLoaders
-                    loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader')
+                    loader: ExtractTextPlugin.extract( { fallbackLoader: "style-loader", loader: "css-loader!sass" })
                 }
                 /*{
                      test: /\.jsx?$/,
