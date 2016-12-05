@@ -4,51 +4,51 @@ import FlexableElement from './FlexableElement';
 
 const Cell = ({
     _key,
-    className,
-    style,
     rowData,
-    propertyMap,
+    columnDefinition,
     ...remainingProps
 }) => {
-    const _className = `${ className ? `${className} ` : '' }flexable-row-cell`;
+
+    if (columnDefinition === null || columnDefinition === undefined) {
+        return (<div className="flexable-row-cell"/>);
+    }
+
+    let definition = columnDefinition;
+    if (typeof columnDefinition.defineCell === 'function') {
+        // callers should be prepared to handle scenario where rowData is undefined
+        // by still defining things like static styles and classNames (especially
+        // if they affect layout)
+        definition = { ...columnDefinition, ...columnDefinition.defineCell(rowData) };
+    }
+
+    const className = `${ definition.className ? `${definition.className} ` : '' }flexable-row-cell`;
+
+    const { propertyMap } = definition;
+
     if (rowData === undefined || propertyMap === undefined) {
         return (
-            <div style={style} className={_className}></div>
+            <div style={definition.style} className={className}></div>
         );
     }
 
-    const cellData = propertyMap(rowData);
+    const children = propertyMap(rowData);
 
+    // note order of props is important here (e.g. we want className to over-write
+    // className in definition
     return (
-        <FlexableElement _key={_key}
-                         style={style}
-                         className={_className}
-                         cellData={cellData}
-                         text={cellData}
-                         rowData={rowData}
-                         {...remainingProps} />
+        <FlexableElement {...remainingProps}
+                         _key={_key}
+                         {...definition}
+                         className={className}>
+            {children}
+         </FlexableElement>
     );
 };
 
 Cell.propTypes = {
     _key: PropTypes.string,
-    className: PropTypes.string,
-    style: PropTypes.object,
     rowData: PropTypes.object,
-    // propertyMap should be a function that
-    // takes the object representing a row
-    // and returns the data as you want to
-    // represent it as `cellData`
-    //
-    // If there are no child elements, the
-    // Cell will show the result of this function
-    // "as is"
-    // Otherwise, if the Cell has any child
-    // elements, the Cell will pass the 'cellData'
-    // to these child elements and leave it up
-    // to these elements to represent this data
-    // as they see fit
-    propertyMap: PropTypes.func
+    columnDefinition: PropTypes.object
 };
 
 export default Cell;

@@ -20,7 +20,7 @@ export const RowHOC = (Cell) => ({
            return c;
         }
         const columnDefinition = columnDefinitions ? columnDefinitions[i] : Object.create(null);
-        const props = except({..._passthroughProps, ...columnDefinition, rowData }, remainingProps.omitProps || []);
+        const props = except({..._passthroughProps, columnDefinition, rowData }, remainingProps.omitProps || []);
         return React.cloneElement(c, props);
     }));
 

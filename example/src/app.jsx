@@ -75,11 +75,16 @@ const columnDefinitions = [{
     columnHeaderStyle: {},
     columnHeaderText: 'Name'
 }, {
-    propertyMap: (r) => r.age,
+    // defining cell properties in context of row
+    // you can use this to modify style, className,
+    // etc.. of cell in context of the row data
+    // e.g. show red if the value is negative or
+    // blue if the value is positive
+    defineCell: (row) => ({ 
+        propertyMap: () => row.age 
+    }),
     columnHeaderText: 'Age',
-    columnHeaderClassName : '',
-    columnHeaderStyle: {},
-    columnHeaderText: 'Name'
+    columnHeaderClassName : ''
 }];
 
 ReactDOM.render(
@@ -87,7 +92,7 @@ ReactDOM.render(
         <Table tableData={data}
                includeVerticalScrollbar={true}
                columnDefinitions={columnDefinitions}
-               tableBodyStyle={ { maxHeight: 400 } } />
+               tableBodyStyle={ { maxHeight: 200 } } />
     </div>,
     document.getElementById('example')
 );
