@@ -3,24 +3,20 @@ import React, { Component, PropTypes } from 'react';
 import FlexableElement from './FlexableElement';
 
 const ColumnHeader = ({
-    columnHeaderClassName,
-    columnHeaderStyle,
-    columnHeaderText,
+    columnDefinition,
     ...remainingProps
 }) => {
-    const className = `${ columnHeaderClassName ? `${columnHeaderClassName} ` : '' }column-header flexable-row-cell`;
+    const className = `${ columnDefinition.columnHeaderClassName ? `${columnDefinition.columnHeaderClassName} ` : '' }column-header flexable-row-cell`;
     return (
         <FlexableElement {...remainingProps}
-                         style={columnHeaderStyle}
+                         style={columnDefinition.columnHeaderStyle}
                          className={className}
-                         text={columnHeaderText} />
+                         text={columnDefinition.columnHeaderText} />
     );
 }
 
 ColumnHeader.propTypes = {
-    columnHeaderClassName: PropTypes.string,
-    columnHeaderStyle: PropTypes.object,
-    columnHeaderText: PropTypes.string
+    columnDefinition: PropTypes.object
 };
 
 export default ColumnHeader;

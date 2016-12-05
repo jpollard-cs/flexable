@@ -12,7 +12,13 @@ export function convertToCsvString(columnDefinitions, data, options = {}, format
 
 export function defaultFormatRow(row, columnDefinitions, delimeter) {
     return columnDefinitions
-        .map(d => safeConvertToCsvRecord(d.propertyMap(row), delimeter))
+        .map(d => {
+            let cellDefinition = d;
+            if (typeof d.defineCell === 'function') {
+                cellDefinition = d.defineCell(row);
+            }
+            return safeConvertToCsvRecord(cellDefinition.propertyMap(row), delimeter)
+        })
         .join(delimeter);
 }
 

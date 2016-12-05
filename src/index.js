@@ -10,7 +10,7 @@ requirePath('');
 requirePath('css');*/
 
 export { default as Table } from './Table';
-export { default as Row } from './Row.jsx';
+export { default as Row } from './Row';
 export { default as ColumnHeader } from './ColumnHeader';
 export { default as FlexableElement } from './FlexableElement';
 export { default as GroupHeaderRow } from './GroupHeaderRow';

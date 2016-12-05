@@ -11,6 +11,11 @@ const columnDefinitions = [{
 }, {
     columnHeaderText: 'Y Units',
     propertyMap: (row) => row.y
+}, {
+    columnHeaderText: 'Y Units',
+    defineCell: (row) => ({
+        propertyMap: () => row.y
+    })
 }];
 
 describe('exportUtils', () => {
@@ -37,30 +42,30 @@ describe('exportUtils', () => {
 
     describe('defaultFormatHeaderRow', () => {
       it('returns expected result', () => {
-          expect(defaultFormatHeaderRow(columnDefinitions)).to.equal('Name,X Dollars ($),Y Units');
+          expect(defaultFormatHeaderRow(columnDefinitions)).to.equal('Name,X Dollars ($),Y Units,Y Units');
       });
     });
-    
+
     describe('defaultFormatRow', () => {
         it('returns expected result', () => {
-            expect(defaultFormatRow(data[0], columnDefinitions)).to.equal('test 1,$24.00,12');
+            expect(defaultFormatRow(data[0], columnDefinitions)).to.equal('test 1,$24.00,12,12');
         });
     });
 
     describe('convertToCsvString', () => {
         it('returns expected result when utf8Bom option is true', () => {
             expect(convertToCsvString(columnDefinitions, data, { utf8Bom: true }))
-                .to.equal('\ufeffName,X Dollars ($),Y Units\r\ntest 1,$24.00,12\r\ntest 2,$28.00,14');
+                .to.equal('\ufeffName,X Dollars ($),Y Units,Y Units\r\ntest 1,$24.00,12,12\r\ntest 2,$28.00,14,14');
         });
 
         it('returns expected result when utf8Bom option is false', () => {
             expect(convertToCsvString(columnDefinitions, data, { utf8Bom: false }))
-                .to.equal('Name,X Dollars ($),Y Units\r\ntest 1,$24.00,12\r\ntest 2,$28.00,14');
+                .to.equal('Name,X Dollars ($),Y Units,Y Units\r\ntest 1,$24.00,12,12\r\ntest 2,$28.00,14,14');
         });
 
         it('returns expected result when delimeter option is tab', () => {
             expect(convertToCsvString(columnDefinitions, data, { utf8Bom: true, delimeter: '    ' }))
-                .to.equal('\ufeffName    X Dollars ($)    Y Units\r\ntest 1    $24.00    12\r\ntest 2    $28.00    14');
+                .to.equal('\ufeffName    X Dollars ($)    Y Units    Y Units\r\ntest 1    $24.00    12    12\r\ntest 2    $28.00    14    14');
         });
     });
 

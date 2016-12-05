@@ -1,6 +1,6 @@
 {
   "name": "flexable",
-  "version": "0.1.11",
+  "version": "0.2.0",
   "description": "a flexible and lightweight React table control",
   "main": "index.js",
   "scripts": {
