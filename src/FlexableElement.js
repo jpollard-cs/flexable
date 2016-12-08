@@ -12,7 +12,7 @@ const FlexableElement = ({
     omitProps,
     ...remainingProps
 }) => {
-    let kids = children ? children : _children;
+    let kids = typeof children !== 'undefined' ? children : _children;
     let _transformChildren = transformChildren;
     const passthroughProps = except(remainingProps, [...omitProps]);
 

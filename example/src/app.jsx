@@ -7,7 +7,7 @@ import '!style-loader!css-loader!./example.css';
 
 const data = [{
         name: 'Bernie',
-        age: 74
+        age: 0
     }, {
         name: 'Hillary',
         age: 68
@@ -64,7 +64,7 @@ const data = [{
         age: 44
     }, {
         name: 'Ted',
-        age: 45
+        age: 0
     }];
 
 const columnDefinitions = [{
@@ -80,8 +80,8 @@ const columnDefinitions = [{
     // etc.. of cell in context of the row data
     // e.g. show red if the value is negative or
     // blue if the value is positive
-    defineCell: (row) => ({ 
-        propertyMap: () => row.age 
+    defineCell: (row) => ({
+        propertyMap: () => row.age
     }),
     columnHeaderText: 'Age',
     columnHeaderClassName : ''
