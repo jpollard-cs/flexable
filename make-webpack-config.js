@@ -3,8 +3,6 @@ var webpack = require('webpack');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var node_modules   = path.resolve(__dirname, 'node_modules');
 
-// TODO: make webpack 1 version of this until webpack 2 is stable
-
 function makeConfig(isProd, buildDocs) {
     var plugins = [
         new webpack.NoErrorsPlugin(),

@@ -1,11 +1,25 @@
 import React, { Component, PropTypes } from 'react';
 import except from 'except';
 
+/**
+ *
+ * @param id
+ * @param className
+ * @param children
+ * @param _children
+ * @param style
+ * @param transformChildren
+ * @param text
+ * @param omitProps
+ * @param remainingProps
+ * @returns {XML}
+ * @constructor
+ */
 const FlexableElement = ({
     id,
     className,
     children,
-    _children, // since we React can override provided children props
+    _children, // since React can override provided children props
     style,
     transformChildren,
     text,
