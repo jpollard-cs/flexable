@@ -52,7 +52,6 @@ function makeDocsConfig() {
                     // Skip any files outside of your project's `src` directory
                     include: [
                         path.resolve(__dirname, "example/src"),
-                        path.resolve(__dirname, "src") //todo: only use this when importing source directly - remove once using distributable for examples
                     ],
 
                     // Only run `.js` and `.jsx` files through Babel

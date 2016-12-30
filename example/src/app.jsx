@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Table from '../../lib/Table'
+import { Table } from '../../dist/flexable.min';
 import '!style-loader!css-loader!../../dist/flexable.css';
 import '!style-loader!css-loader!./example.css';
-// TODO: figure out why isn't working to import { Table } from distributable
 
 const data = [{
         name: 'Bernie',
