@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Table } from '../../dist/flexable.min';
+import Table from '../../lib/Table'
 import '!style-loader!css-loader!../../dist/flexable.css';
 import '!style-loader!css-loader!./example.css';
 
