@@ -1,78 +1,18 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Table from '../../lib/Table'
 import '!style-loader!css-loader!../../dist/flexable.css';
 import '!style-loader!css-loader!./example.css';
-
-const data = [{
-        name: 'Bernie',
-        age: 0
-    }, {
-        name: 'Hillary',
-        age: 68
-    }, {
-        name: 'Donald',
-        age: 69
-    }, {
-        name: 'Marco',
-        age: 44
-    }, {
-        name: 'Ted',
-        age: 45
-    }, {
-        name: 'Bernie',
-        age: 74
-    }, {
-        name: 'Hillary',
-        age: 68
-    }, {
-        name: 'Donald',
-        age: 69
-    }, {
-        name: 'Marco',
-        age: 44
-    }, {
-        name: 'Ted',
-        age: 45
-    }, {
-        name: 'Bernie',
-        age: 74
-    }, {
-        name: 'Hillary',
-        age: 68
-    }, {
-        name: 'Donald',
-        age: 69
-    }, {
-        name: 'Marco',
-        age: 44
-    }, {
-        name: 'Ted',
-        age: 45
-    }, {
-        name: 'Bernie',
-        age: 74
-    }, {
-        name: 'Hillary',
-        age: 68
-    }, {
-        name: 'Donald',
-        age: 69
-    }, {
-        name: 'Marco',
-        age: 44
-    }, {
-        name: 'Ted',
-        age: 0
-    }];
+import axios from 'axios';
+// TODO: figure out why isn't working to import { Table } from distributable
 
 const columnDefinitions = [{
     className: 'utility-flex-grow-3 row-name',
     style: {},
-    propertyMap: (r) => r.name,
+    propertyMap: (r) => r.Title,
     columnHeaderClassName: 'utility-flex-grow-3',
     columnHeaderStyle: {},
-    columnHeaderText: 'Name'
+    columnHeaderText: 'TITLE'
 }, {
     // defining cell properties in context of row
     // you can use this to modify style, className,
@@ -80,18 +20,59 @@ const columnDefinitions = [{
     // e.g. show red if the value is negative or
     // blue if the value is positive
     defineCell: (row) => ({
-        propertyMap: () => row.age
+        propertyMap: () => row.Year
     }),
-    columnHeaderText: 'Age',
+    columnHeaderText: 'YEAR',
     columnHeaderClassName : ''
+}, {
+    className: 'utility-flex-grow-2 row-name',
+    style: {},
+    propertyMap: (r) => r.imdbID,
+    columnHeaderClassName: 'utility-flex-grow-2',
+    columnHeaderStyle: {},
+    columnHeaderText: 'IMDB ID'
+}, {
+    className: 'utility-flex-grow-2 row-name',
+    style: {},
+    propertyMap: (r) => r.Type,
+    columnHeaderClassName: 'utility-flex-grow-2',
+    columnHeaderStyle: {},
+    columnHeaderText: 'Type'
+}, {
+    className: 'utility-flex-grow-3 row-name',
+    style: { }, //TODO: this should be passed down to child elements
+    propertyMap: (r) => (<div><img src={r.Poster} style={{ maxWidth: '200px', height: 'auto' }} /></div>),
+    columnHeaderClassName: 'utility-flex-grow-3',
+    columnHeaderStyle: {},
+    columnHeaderText: 'Poster'
 }];
 
+class Example extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
+    componentDidMount() {
+        if (!this.state.data) {
+            return axios.get('http://www.omdbapi.com/?s=football')
+                .then(({ data }) => this.setState({ data: data.Search }));
+        }
+    }
+
+    render() {
+        return (
+            <div>
+                {this.state.data && <Table tableData={this.state.data}
+                    includeVerticalScrollbar={true}
+                    columnDefinitions={columnDefinitions}
+                    tableBodyStyle={ { maxHeight: 500 } } />}
+            </div>
+        );
+    }
+}
+
 ReactDOM.render(
-    <div>
-        <Table tableData={data}
-               includeVerticalScrollbar={true}
-               columnDefinitions={columnDefinitions}
-               tableBodyStyle={ { maxHeight: 200 } } />
-    </div>,
+    <Example />,
     document.getElementById('example')
 );
