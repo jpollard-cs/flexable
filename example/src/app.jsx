@@ -6,65 +6,59 @@ import '!style-loader!css-loader!./example.css';
 // TODO: figure out why isn't working to import { Table } from distributable
 
 const data = [{
-        name: 'Bernie',
+        name: 'Sally',
         age: 0
     }, {
-        name: 'Hillary',
+        name: 'Fred',
         age: 68
     }, {
-        name: 'Donald',
+        name: 'Ted',
         age: 69
     }, {
-        name: 'Marco',
+        name: 'Donna',
         age: 44
     }, {
         name: 'Ted',
         age: 45
     }, {
-        name: 'Bernie',
+        name: 'Frankie',
         age: 74
     }, {
-        name: 'Hillary',
+        name: 'Bob',
         age: 68
     }, {
-        name: 'Donald',
+        name: 'Elmo',
         age: 69
     }, {
-        name: 'Marco',
+        name: 'Madison',
         age: 44
     }, {
-        name: 'Ted',
+        name: 'Jessica',
         age: 45
     }, {
-        name: 'Bernie',
+        name: 'Amy',
         age: 74
     }, {
         name: 'Hillary',
         age: 68
     }, {
-        name: 'Donald',
+        name: 'Franklin',
         age: 69
     }, {
-        name: 'Marco',
+        name: 'Brian',
         age: 44
     }, {
-        name: 'Ted',
+        name: 'Mark',
         age: 45
     }, {
-        name: 'Bernie',
+        name: 'Amelia',
         age: 74
     }, {
-        name: 'Hillary',
+        name: 'Sam',
         age: 68
     }, {
         name: 'Donald',
         age: 69
-    }, {
-        name: 'Marco',
-        age: 44
-    }, {
-        name: 'Ted',
-        age: 0
     }];
 
 const columnDefinitions = [{
